@@ -1,27 +1,35 @@
 "use client";
 import React from "react";
 import Image, { StaticImageData } from "next/image";
+import { useRouter } from "next/navigation";
 
 type ProductCardProps = {
+  id: number;
   image: StaticImageData | string;
   title: string;
   price: number;
-  onClick?: () => void;
+  onAddToCart: () => void;
 };
 
 const ProductCard: React.FC<ProductCardProps> = ({
+  id,
   image,
   title,
   price,
-  onClick,
+  onAddToCart,
 }) => {
-  const handleAddToCart = () => {
-    console.log("Added to cart:", title);
-    if (onClick) onClick();
+  const router = useRouter();
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onAddToCart();
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col h-full w-80">
+    <div 
+      className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col h-full w-80 cursor-pointer"
+      onClick={() => router.push(`/products/${id}`)}
+    >
       {/* Image Container - Larger */}
       <div className="relative aspect-square w-full">
         <Image

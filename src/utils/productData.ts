@@ -2,89 +2,133 @@ export const items = [
   {
     id: 1,
     name: "Running Shoes",
-    image: "/images/running_shoes.avif",
+    images: [
+      "/images/running_shoes.avif",
+      "/images/running_shoes.avif",
+      "/images/running_shoes.avif"
+    ],
     description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam unde deserunt voluptatum.",
-    price: 99,
+    price: 129.99,
     category: "clothing",
   },
   {
     id: 2,
     name: "Formal Shoes",
-    image: "/images/formal_shoes.avif",
+    images: [
+      "/images/formal_shoes.avif",
+      "/images/formal_shoes.avif",
+      "/images/formal_shoes.avif"
+    ],
     description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam unde deserunt voluptatum.",
-    price: 99,
+    price: 199.99,
     category: "clothing",
   },
   {
     id: 3,
     name: "Casual Shoes",
-    image: "/images/casual_shoes.avif",
+    images: [
+      "/images/casual_shoes.avif",
+      "/images/casual_shoes.avif",
+      "/images/casual_shoes.avif"
+    ],
     description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam unde deserunt voluptatum.",
-    price: 99,
+    price: 89.99,
     category: "clothing",
   },
   {
     id: 4,
     name: "Camera",
-    image: "/images/camera.avif",
+    images: [
+      "/images/camera.avif",
+      "/images/camera.avif",
+      "/images/camera.avif"
+    ],
     description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam unde deserunt voluptatum.",
-    price: 99,
+    price: 799.99,
     category: "electronics",
   },
   {
     id: 5,
     name: "Earbud",
-    image: "/images/earpods.avif",
+    images: [
+      "/images/earpods.avif",
+      "/images/earpods.avif",
+      "/images/earpods.avif"
+    ],
     description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam unde deserunt voluptatum.",
-    price: 99,
+    price: 149.99,
     category: "electronics",
   },
   {
     id: 6,
     name: "Headphone",
-    image: "/images/headphone.avif",
+    images: [
+      "/images/headphone.avif",
+      "/images/headphone.avif",
+      "/images/headphone.avif"
+    ],
     description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam unde deserunt voluptatum.",
-    price: 99,
+    price: 299.99,
     category: "electronics",
   },
   {
     id: 7,
     name: "Sofa",
-    image: "/images/sofa.avif",
+    images: [
+      "/images/sofa.avif",
+      "/images/sofa.avif",
+      "/images/sofa.avif"
+    ],
     description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam unde deserunt voluptatum.",
-    price: 99,
+    price: 899.99,
     category: "home",
   },
   {
     id: 8,
     name: "Chair",
-    image: "/images/chair.avif",
+    images: [
+      "/images/chair.avif",
+      "/images/chair.avif",
+      "/images/chair.avif"
+    ],
     description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam unde deserunt voluptatum.",
-    price: 99,
+    price: 249.99,
     category: "home",
   },
   {
     id: 9,
     name: "Study Lamp",
-    image: "/images/lamp.avif",
+    images: [
+      "/images/lamp.avif",
+      "/images/lamp.avif",
+      "/images/lamp.avif"
+    ],
     description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam unde deserunt voluptatum.",
-    price: 99,
-    category: "home", // Added missing category
+    price: 49.99,
+    category: "home",
   },
   {
     id: 10,
     name: "Shirt",
-    image: "/images/running_shoes.avif", // You might want to fix this if wrong
+    images: [
+      "/images/shirt.avif",
+      "/images/shirt.avif",
+      "/images/shirt.avif"
+    ],
     description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam unde deserunt voluptatum.",
-    price: 99,
+    price: 39.99,
     category: "clothing",
   },
   {
     id: 11,
     name: "T-Shirt",
-    image: "/images/tshirt.avif",
+    images: [
+      "/images/tshirt.avif",
+      "/images/tshirt.avif",
+      "/images/tshirt.avif"
+    ],
     description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam unde deserunt voluptatum.",
-    price: 99,
+    price: 29.99,
     category: "clothing",
   },
 ];
