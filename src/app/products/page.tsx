@@ -1,4 +1,5 @@
 import React from 'react'
+import { items } from '@/utils/productData';
 
 const Products = () => {
     return(
