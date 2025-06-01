@@ -18,9 +18,19 @@ const Products = () => {
   const { categories, priceRange, searchQuery, addToCart } = useStore();
   const [currentPage, setCurrentPage] = useState(1);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [quantities, setQuantities] = useState<Record<number, number>>({});
   const productsPerPage = 9;
 
   const typedItems = items as Product[];
+
+  // Initialize quantities
+  useEffect(() => {
+    const initialQuantities = typedItems.reduce((acc, item) => {
+      acc[item.id] = 1;
+      return acc;
+    }, {} as Record<number, number>);
+    setQuantities(initialQuantities);
+  }, []);
 
   // Filter products based on state
   const filteredProducts = typedItems.filter((item) => {
@@ -44,6 +54,23 @@ const Products = () => {
     setCurrentPage(1);
   }, [categories, priceRange, searchQuery]);
 
+  const handleQuantityChange = (id: number, newQuantity: number) => {
+    setQuantities(prev => ({
+      ...prev,
+      [id]: Math.max(1, newQuantity)
+    }));
+  };
+
+  const handleAddToCart = (product: Product) => {
+    addToCart({
+      id: product.id.toString(),
+      name: product.name,
+      price: product.price,
+      image: product.images[0],
+      quantity: quantities[product.id] || 1
+    });
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Mobile Filter Toggle Button */}
@@ -59,7 +86,7 @@ const Products = () => {
         </button>
       </div>
 
-      <div className="flex flex-col lg:flex-row container mx-auto w-full px-2 sm:px-4">
+      <div className="flex gap-5 flex-col lg:flex-row container mx-auto w-full px-2 sm:px-4">
         {/* Sidebar - Hidden on mobile when menu is closed */}
         <div className={`${isMobileMenuOpen ? 'block' : 'hidden'} lg:block w-full lg:w-1/4 xl:w-1/5 p-2`}>
           <Sidebar />
@@ -67,7 +94,6 @@ const Products = () => {
         
         {/* Main Content Area */}
         <div className="flex-grow p-2">
-
           {/* Product Count */}
           <div className="mb-4 text-sm text-gray-600">
             Showing {currentProducts.length} of {filteredProducts.length} products
@@ -76,24 +102,25 @@ const Products = () => {
           {/* Product Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 place-items-center">
             {currentProducts.map((item) => (
-              <ProductCard
-                key={item.id}
-                id={item.id}
-                image={item.images[0]}
-                title={item.name}
-                price={item.price}
-                onAddToCart={() => addToCart({
-                  id: item.id.toString(),
-                  name: item.name,
-                  price: item.price,
-                  image: item.images[0],
-                  quantity: 1
-                })}
-              />
+              <div key={item.id} className="w-full">
+                <ProductCard
+                  id={item.id}
+                  image={item.images[0]}
+                  title={item.name}
+                  price={item.price}
+                  onAddToCart={(quantity) => addToCart({
+                    id: item.id.toString(),
+                    name: item.name,
+                    price: item.price,
+                    image: item.images[0],
+                    quantity: quantity
+                  })}
+                />
+              </div>
             ))}
           </div>
 
-          {/* Pagination Controls - Bottom on all screens */}
+          {/* Pagination Controls */}
           {totalPages > 1 && (
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-8">
               <button

@@ -5,6 +5,7 @@ import { items } from "@/utils/productData";
 import { useStore } from "@/store/store";
 import Link from "next/link";
 import ImageCarousel from "@/components/ImageCarousel";
+import Review from '@/components/Review';
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -124,6 +125,15 @@ const ProductDetail = () => {
               >
                 Add to Cart
               </button>
+
+              {/* Product Description */}
+              <div className="mt-8">
+                <h2 className="text-2xl font-bold mb-4">Description</h2>
+                <p className="text-gray-600">{product.description}</p>
+              </div>
+
+              {/* Reviews Section */}
+              <Review productId={product.id} />
             </div>
           </div>
         </div>

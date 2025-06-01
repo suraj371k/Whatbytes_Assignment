@@ -1,6 +1,14 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+interface CartItem {
+  id: string;
+  name: string;
+  price: number;
+  image: string;
+  quantity: number;
+}
+
 interface FilterState {
   categories: string[];
   priceRange: [number, number];
@@ -10,49 +18,59 @@ interface FilterState {
   setPriceRange: (min: number, max: number) => void;
   setSearchQuery: (query: string) => void;
   addToCart: (item: CartItem) => void;
+  addToCartWithQuantity: (item: Omit<CartItem, 'quantity'>, quantity: number) => void;
+  updateCartItemQuantity: (id: string, quantity: number) => void;
   removeFromCart: (id: string) => void;
   clearCart: () => void;
 }
 
-interface CartItem {
-  id: string;
-  name: string;
-  price: number;
-  image: string;
-  quantity: number;
-}
-
 export const useStore = create<FilterState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       categories: [],
       priceRange: [0, 1000],
       searchQuery: '',
       cart: [],
+      
+      // Filter actions
       setCategories: (categories) => set({ categories }),
       setPriceRange: (min, max) => set({ priceRange: [min, max] }),
       setSearchQuery: (searchQuery) => set({ searchQuery }),
+      
+      // Cart actions
       addToCart: (item) => 
         set((state) => {
           const existingItem = state.cart.find((i) => i.id === item.id);
           if (existingItem) {
             return {
               cart: state.cart.map((i) =>
-                i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+                i.id === item.id ? { ...i, quantity: i.quantity + item.quantity } : i
               ),
             };
           }
-          return { cart: [...state.cart, { ...item, quantity: 1 }] };
+          return { cart: [...state.cart, item] };
         }),
+      
+      addToCartWithQuantity: (item, quantity) => {
+        get().addToCart({ ...item, quantity });
+      },
+      
+      updateCartItemQuantity: (id, quantity) => set((state) => ({
+        cart: state.cart.map((item) =>
+          item.id === id ? { ...item, quantity: Math.max(1, quantity) } : item
+        ),
+      })),
+      
       removeFromCart: (id) =>
         set((state) => ({
           cart: state.cart.filter((item) => item.id !== id),
         })),
+      
       clearCart: () => set({ cart: [] }),
     }),
     {
-      name: 'app-store', // LocalStorage key
-      partialize: (state) => ({ cart: state.cart }), // Only persist cart to localStorage
+      name: 'app-store',
+      partialize: (state) => ({ cart: state.cart }),
     }
   )
 );

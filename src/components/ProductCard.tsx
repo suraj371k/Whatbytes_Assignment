@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Image, { StaticImageData } from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -8,7 +8,7 @@ type ProductCardProps = {
   image: StaticImageData | string;
   title: string;
   price: number;
-  onAddToCart: () => void;
+  onAddToCart: (quantity: number) => void;
 };
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -19,10 +19,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
   onAddToCart,
 }) => {
   const router = useRouter();
+  const [quantity, setQuantity] = useState(1);
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
-    onAddToCart();
+    onAddToCart(quantity);
   };
 
   return (
@@ -46,6 +47,46 @@ const ProductCard: React.FC<ProductCardProps> = ({
       <div className="p-5 flex-grow space-y-2">
         <h3 className="text-xl font-semibold text-gray-800 line-clamp-2">{title}</h3>
         <p className="text-2xl font-bold text-gray-900">${price.toFixed(2)}</p>
+        
+        {/* Quantity Selector */}
+        <div className="flex items-center gap-2">
+          <label htmlFor={`quantity-${id}`} className="text-sm text-gray-600">
+            Quantity:
+          </label>
+          <div className="flex items-center border rounded-lg">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setQuantity(prev => Math.max(1, prev - 1));
+              }}
+              className="px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-l-lg transition-colors"
+              aria-label="Decrease quantity"
+            >
+              -
+            </button>
+            <input
+              type="number"
+              id={`quantity-${id}`}
+              min="1"
+              value={quantity}
+              onChange={(e) => {
+                e.stopPropagation();
+                setQuantity(Math.max(1, parseInt(e.target.value) || 1));
+              }}
+              className="w-12 text-center border-x py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setQuantity(prev => prev + 1);
+              }}
+              className="px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-r-lg transition-colors"
+              aria-label="Increase quantity"
+            >
+              +
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Button - Larger */}
@@ -54,7 +95,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 px-6 rounded-lg transition-colors duration-300 font-medium text-lg"
           onClick={handleAddToCart}
         >
-          Add to Cart
+          Add to Cart ({quantity})
         </button>
       </div>
     </div>
