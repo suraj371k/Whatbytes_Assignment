@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Image, { StaticImageData } from "next/image";
 import { useRouter } from "next/navigation";
+import { Rating } from '@mui/material';
 
 type ProductCardProps = {
   id: number;
@@ -20,6 +21,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   const router = useRouter();
   const [quantity, setQuantity] = useState(1);
+  // Generate a random rating between 3.5 and 5
+  const rating = (Math.random() * 1.5 + 3.5).toFixed(1);
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -46,6 +49,18 @@ const ProductCard: React.FC<ProductCardProps> = ({
       {/* Product Info */}
       <div className="p-5 flex-grow space-y-2">
         <h3 className="text-xl font-semibold text-gray-800 line-clamp-2">{title}</h3>
+        
+        {/* Rating Display */}
+        <div className="flex items-center gap-2">
+          <Rating 
+            value={Number(rating)} 
+            readOnly 
+            precision={0.5} 
+            size="small"
+          />
+          <span className="text-sm text-gray-600">({rating})</span>
+        </div>
+
         <p className="text-2xl font-bold text-gray-900">${price.toFixed(2)}</p>
         
         {/* Quantity Selector */}
