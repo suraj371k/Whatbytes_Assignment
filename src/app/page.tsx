@@ -1,10 +1,11 @@
 import Sidebar from "@/components/Sidebar";
-import Image from "next/image";
+import Products from "./products/page";
 
 export default function Home() {
   return (
-     <div className="mt-5">
+     <div className="mt-5 w-full gap-10 flex container mx-auto justify-center">
       <Sidebar />
+      <Products />
      </div>
   );
 }

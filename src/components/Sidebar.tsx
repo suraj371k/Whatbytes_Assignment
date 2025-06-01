@@ -7,8 +7,8 @@ const Sidebar = () => {
                         cursor-pointer transition-colors duration-200`;
 
   return (
-    <div className="max-w-[12vw] text-white">
-      <div className="bg-blue-800 p-4 rounded-md">
+    <div className="w-[15vw] py-4 text-white">
+      <div className="bg-blue-800 py-4 p-4 rounded-md">
         <h3 className="text-2xl">Filters</h3>
 
         {/* Categories */}

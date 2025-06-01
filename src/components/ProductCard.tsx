@@ -1,48 +1,50 @@
-import React from 'react';
+"use client";
+import React from "react";
+import Image, { StaticImageData } from "next/image";
 
-// Define the type for the component props
 type ProductCardProps = {
-  image: string;
+  image: StaticImageData | string;
   title: string;
   price: number;
-  onClick?: () => void; // Optional click handler
+  onClick?: () => void;
 };
 
-const ProductCard: React.FC<ProductCardProps> = ({ 
-  image, 
-  title, 
+const ProductCard: React.FC<ProductCardProps> = ({
+  image,
+  title,
   price,
-  onClick 
+  onClick,
 }) => {
   const handleAddToCart = () => {
-    console.log('Added to cart:', title);
-    if (onClick) onClick(); // Call the provided onClick handler if it exists
+    console.log("Added to cart:", title);
+    if (onClick) onClick();
   };
 
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
-      {/* Product Image */}
-      <div className="h-48 overflow-hidden">
-        <img 
-          className="w-full h-full object-cover" 
-          src={image} 
-          alt={title} 
-          loading="lazy" // Add lazy loading for better performance
+    <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col h-full w-80">
+      {/* Image Container - Larger */}
+      <div className="relative aspect-square w-full">
+        <Image
+          src={image}
+          alt={title}
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, 320px"
+          priority
         />
       </div>
-      
+
       {/* Product Info */}
-      <div className="px-4 py-4">
-        <h3 className="text-gray-900 font-semibold text-lg mb-2 line-clamp-2">{title}</h3>
-        <p className="text-gray-900 font-bold text-xl">${price.toFixed(2)}</p>
+      <div className="p-5 flex-grow space-y-2">
+        <h3 className="text-xl font-semibold text-gray-800 line-clamp-2">{title}</h3>
+        <p className="text-2xl font-bold text-gray-900">${price.toFixed(2)}</p>
       </div>
-      
-      {/* Add to Cart Button */}
-      <div className="px-4 pb-4">
-        <button 
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300"
+
+      {/* Button - Larger */}
+      <div className="px-5 pb-5">
+        <button
+          className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 px-6 rounded-lg transition-colors duration-300 font-medium text-lg"
           onClick={handleAddToCart}
-          aria-label={`Add ${title} to cart`}
         >
           Add to Cart
         </button>
